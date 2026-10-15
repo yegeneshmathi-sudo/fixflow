@@ -18,22 +18,15 @@ let pool;
 /* ---------- Database bootstrap: creates DB + table + sample data ---------- */
 async function initDb() {
   const conn = {
-    host: process.env.DB_HOST || '127.0.0.1',
+    host: process.env.DB_HOST || 'localhost',
     port: Number(process.env.DB_PORT) || 3306,
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
-    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
   };
 
-  // Local MySQL: create the database if missing.
-  // Cloud MySQL usually does not allow this, so a failure here is fine.
-  try {
-    const boot = await mysql.createConnection(conn);
-    await boot.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\``);
-    await boot.end();
-  } catch (err) {
-    console.log('Skipping CREATE DATABASE (' + (err.code || err.message) + '); using existing database.');
-  }
+  const boot = await mysql.createConnection(conn);
+  await boot.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\``);
+  await boot.end();
 
   pool = mysql.createPool({
     ...conn,
@@ -193,7 +186,7 @@ app.use('/api', (req, res) => res.status(404).json({ error: 'Not found.' }));
 initDb()
   .then(() => app.listen(PORT, () => console.log(`FixFlow running at http://localhost:${PORT}`)))
   .catch((err) => {
-    console.error('\nCould not connect to MySQL:', err.code, err.message, err.errors || '');
-    console.error('Check the DB_* settings (.env locally, Environment Variables on Render) and that MySQL is reachable.\n');
+    console.error('\nCould not connect to MySQL:', err.message);
+    console.error('Check DB_USER / DB_PASSWORD in your .env file and that MySQL is running.\n');
     process.exit(1);
   });
