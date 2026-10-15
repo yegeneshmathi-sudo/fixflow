@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Report a fault | FixFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="hazard" aria-hidden="true"></div>
+  <header class="site">
+    <div class="bar">
+      <a class="brand" href="index.html">Fix<span>Flow</span></a>
+      <nav aria-label="Main">
+        <a href="index.html" aria-current="page">Report a fault</a>
+        <a href="dashboard.html">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Report a fault</h1>
+    <p class="lede">Tell the maintenance team what is broken and where. Every report is tracked until it is resolved.</p>
+
+    <div class="report-grid">
+      <section>
+        <div id="confirm" class="confirm" hidden role="status"></div>
+
+        <form id="faultForm" class="tag" novalidate>
+          <div class="row">
+            <div class="field">
+              <label for="equipment_name">Equipment name</label>
+              <input type="text" id="equipment_name" name="equipment_name" maxlength="100" placeholder="e.g. Projector" autocomplete="off">
+              <div class="err" data-for="equipment_name"></div>
+            </div>
+            <div class="field">
+              <label for="location">Location</label>
+              <input type="text" id="location" name="location" maxlength="100" placeholder="e.g. Seminar Hall 2" autocomplete="off">
+              <div class="err" data-for="location"></div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="description">What is wrong?</label>
+            <textarea id="description" name="description" maxlength="2000" placeholder="Describe the problem: what you see, what happens, when it started."></textarea>
+            <div class="err" data-for="description"></div>
+          </div>
+
+          <fieldset>
+            <legend>Priority</legend>
+            <div class="prio">
+              <input type="radio" name="priority" id="p-low" value="Low">
+              <label for="p-low" class="p-low"><b>Low</b><small>Works, but needs attention</small></label>
+
+              <input type="radio" name="priority" id="p-medium" value="Medium" checked>
+              <label for="p-medium" class="p-medium"><b>Medium</b><small>Affects daily use</small></label>
+
+              <input type="radio" name="priority" id="p-high" value="High">
+              <label for="p-high" class="p-high"><b>High</b><small>Stopped, or unsafe to use</small></label>
+            </div>
+            <div class="err" data-for="priority"></div>
+          </fieldset>
+
+          <div class="field">
+            <label for="reported_by">Your name <span class="opt">(optional)</span></label>
+            <input type="text" id="reported_by" name="reported_by" maxlength="100" autocomplete="name">
+          </div>
+
+          <button type="submit" id="submitBtn">Submit report</button>
+        </form>
+      </section>
+
+      <aside class="guide">
+        <h2>Choosing a priority</h2>
+        <dl>
+          <dt><span class="dot" style="background:var(--high)"></span> High</dt>
+          <dd>Equipment has stopped working or is a safety risk. These appear first on the maintenance dashboard.</dd>
+          <dt><span class="dot" style="background:var(--medium)"></span> Medium</dt>
+          <dd>Equipment works with problems that disrupt classes or work.</dd>
+          <dt><span class="dot" style="background:var(--low)"></span> Low</dt>
+          <dd>Minor wear, noise or cosmetic damage.</dd>
+        </dl>
+        <p style="margin-top:24px"><a class="btn ghost" href="dashboard.html">See all reports</a></p>
+      </aside>
+    </div>
+  </main>
+
+  <script src="report.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | FixFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="hazard" aria-hidden="true"></div>
+  <header class="site">
+    <div class="bar">
+      <a class="brand" href="index.html">Fix<span>Flow</span></a>
+      <nav aria-label="Main">
+        <a href="index.html">Report a fault</a>
+        <a href="dashboard.html" aria-current="page">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Maintenance dashboard</h1>
+    <p class="lede">High priority faults come first. Change a status from the table as work progresses.</p>
+
+    <section class="strip" aria-label="Summary">
+      <div class="stats">
+        <div class="stat"><div class="n" id="sTotal">0</div><div class="l">Total reports</div></div>
+        <div class="stat s-open"><div class="n" id="sOpen">0</div><div class="l">Open</div></div>
+        <div class="stat s-progress"><div class="n" id="sProgress">0</div><div class="l">In progress</div></div>
+        <div class="stat s-resolved"><div class="n" id="sResolved">0</div><div class="l">Resolved</div></div>
+      </div>
+      <div class="meter" aria-hidden="true">
+        <i class="m-open" id="mOpen" style="width:0"></i>
+        <i class="m-progress" id="mProgress" style="width:0"></i>
+        <i class="m-resolved" id="mResolved" style="width:0"></i>
+      </div>
+      <div class="urgent-note" id="pendingNote"></div>
+    </section>
+
+    <div class="filters">
+      <div class="f grow">
+        <label for="q">Search</label>
+        <input type="text" id="q" placeholder="Equipment, location or description" autocomplete="off">
+      </div>
+      <div class="f">
+        <label for="fStatus">Status</label>
+        <select id="fStatus">
+          <option value="">All statuses</option>
+          <option>Open</option>
+          <option>In Progress</option>
+          <option>Resolved</option>
+        </select>
+      </div>
+      <div class="f">
+        <label for="fPriority">Priority</label>
+        <select id="fPriority">
+          <option value="">All priorities</option>
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+      </div>
+      <div class="count" id="count" aria-live="polite"></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="mark"></th>
+            <th>Equipment</th>
+            <th>Problem</th>
+            <th>Priority</th>
+            <th>Reported</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>
+        <h2>No faults match</h2>
+        <p id="emptyMsg"></p>
+        <a class="btn" href="index.html">Report a fault</a>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="dashboard.js"></script>
+</body>
+</html>
